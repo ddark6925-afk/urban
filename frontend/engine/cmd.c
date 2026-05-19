@@ -222,18 +222,74 @@ void dump_to_file(void){
 
 //4 byte x, 4 byte y, 4 byte building ID
 void tile_build (void){
-    int32_t id;
+    int32_t id, real_id;
     uint32_t x, y;
     fread(&x, 4, 1, stdin);
     fread(&y, 4, 1, stdin);
     fread(&id, 4, 1, stdin);
-    
+    real_id = id;
+
     if(x<0 || y<0 || x>(*game_state).map.x || y>(*game_state).map.y){
         //error
     }
-        
-    uint64_t ptr=lv[3].ptr;
-    *(int32_t *)((int32_t *)ptr+y*(*game_state).map.x+x)=id;
+
+
+    uint8_t *ptr;
+    double price;
+    if(id>=0){
+        ptr = base_ptr+lv[1].ptr;
+        price = *(double*)(base_ptr+lv[2].ptr+id*8);
+    }else{
+        ptr = base_ptr+lv[4].ptr;
+        id*=(-1);
+        id-=1;
+         price = *(double*)(base_ptr+lv[5].ptr+id*8);
+    }
+    if(price>(*game_state).money)
+    {
+        //error
+    } else{
+        (*game_state).money -= price;
+    }
+
+    uint8_t size_x, size_y;
+
+    uint8_t *size_ptr=ptr+id*2;
+    size_x = *size_ptr;
+    size_y = *(size_ptr+1);
+
+    uint32_t new_x, new_y;
+
+    new_x = x+1-size_x;
+    new_y = y-1+size_y;
+
+    if(new_x<0 || new_y<0 || new_x>(*game_state).map.x || new_y>(*game_state).map.y){
+        //error
+    }
+    
+    int32_t shadow_id=0;
+    if(size_x !=1 || size_y != 1){
+        while(*size_ptr!=0 || *(size_ptr+1) !=0){
+            size_ptr+=2;
+        }
+        uint64_t shadow;
+        shadow = (uint64_t)size_ptr-(uint64_t)base_ptr;
+        if(real_id >= 0){
+            shadow-=lv[1].ptr;
+        } else{
+            shadow-=lv[4].ptr;
+        }
+        shadow_id=shaodw/2;
+        if(real_id<0){
+            shadow_id*=(-1);
+            shaodw_id-=1;
+        }
+    }
+
+    //todo, construct building on map
+
+    //uint64_t ptr=lv[3].ptr;
+    //*(int32_t *)((int32_t *)ptr+y*(*game_state).map.x+x)=id;
 
     return;
 }
