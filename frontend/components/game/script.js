@@ -9,7 +9,7 @@ const btnKillAll = document.getElementById('btnBackMainMenu');
 
 
 
-function bNewGame(){
+async function bNewGame(){
     const clear=await window.api.clearPlaybox("newgame");
     if(clear.success){
         console.log(clear.data.message);}
