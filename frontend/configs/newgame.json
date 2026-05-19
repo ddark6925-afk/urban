@@ -1,0 +1,25 @@
+{
+  "newgame": [
+    {
+      "output": "index.html",
+      "components": [
+        "newgame.html"
+      ],
+      "componentPath": "newgame"
+    },
+    {
+      "output": "style.css",
+      "components": [
+        "css/root.css",
+        "newgame/style.css"
+      ]
+    },
+    {
+      "output": "script.js",
+      "components": [
+        "script.js"
+      ],
+      "componentPath": "newgame"
+    }
+  ]
+}
