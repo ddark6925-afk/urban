@@ -9,8 +9,19 @@ const btnKillAll = document.getElementById('btnBackMainMenu');
 
 
 
-function bNewGame(){
-    console.log("Work!");
+async function bNewGame(){
+    const clear=await window.api.clearPlaybox("newgame");
+    if(clear.success){
+        console.log(clear.data.message);}
+    const prepare=await window.api.preparePlaybox("newgame.json");
+    if(prepare.success){
+        console.log(prepare.data.message);
+    }
+    const assemble=await window.api.assemblePlaybox("newgame.json");
+    if(assemble.success){
+        console.log(assemble.data.message);
+    }
+    await window.api.navigate("playbox/newgame/index.html","dynamic");
 }
 
 function bLoadGame(){ //Functia de afisare a Meniului Load Gane
