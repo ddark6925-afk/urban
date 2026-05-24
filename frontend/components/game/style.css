@@ -56,8 +56,6 @@ border: var(--space-2) solid var(--color-border);
     aspect-ratio: var(--aspect-w) / var(--aspect-h);
     width: var(--space-1200);
     height: var(--space-800);
-    max-height: var(--container-max-height);
-    max-width: var(--container-max-width);
     background-color: var(--color-bg-light);
     background-image: url(static://components/game/assets/lgmBackground.jpg); /* Aici ar trb sa fie o poza doar ca nu se poate incarca pe git */
     background-size: cover;
@@ -68,8 +66,9 @@ border: var(--space-2) solid var(--color-border);
 }
 #lgmTitle{
     position: absolute;
+    color: var(--color-accent);
     font-family: 'Segoe UI', Roboto, sans-serif;
-    font-size: 3vw;
+    font-size: var(--space-56);
     top: var(--space-20);
     left: var(--space-20);
     font-weight: bold;
